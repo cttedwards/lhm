@@ -1,0 +1,39 @@
+Package: lhm
+Type: Package
+Title: Life-history module
+Version: 0.0.0.9000
+Date: 2015-09-11
+Author: Charles T T Edwards
+Maintainer: Charles T T Edwards <charles.edwards@niwa.co.nz>
+Description: Module for the storage and processing of life-history data,
+    designed to allow the calculation of derived parameters from life-history
+    theory. Currently it only allows calculation of the intrinsic growth rate using
+    the Euler-Lotka equation.
+License: GPL (>=3)
+LazyData: true
+VignetteBuilder: knitr
+Suggests:
+    knitr,
+    testthat
+Depends:
+    R (>= 3.2.2)
+Imports:
+    methods
+Collate:
+    'lhm-class.R'
+    'iterate.R'
+    'lhmIter-class.R'
+    'iteration.R'
+    'lhm.R'
+    'lhmIter.R'
+    'mass.R'
+    'maturity.R'
+    'nmort.R'
+    'prior-class.R'
+    'plot.prior.R'
+    'prior.R'
+    'rCalc.R'
+    'size.R'
+    'sr.R'
+    'survivorship.R'
+    'zzz.R'
