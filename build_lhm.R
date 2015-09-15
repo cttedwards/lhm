@@ -30,9 +30,14 @@ devtools::document()
 devtools::run_examples(fresh = TRUE)
 
 # run tests
-devtools::test()
+#devtools::test()
+
+# run checks
+devtools::check(vignettes = FALSE)
 
 # build and install
 system("Rcmd.exe INSTALL --no-multiarch --with-keep.source ../lhm")
 
+# build local binary
+devtools::build(binary = TRUE)
 
