@@ -10,4 +10,5 @@
 #' @slot .Data numeric vector of derived values
 #' @slot lognormal.par log-normal distribution parameter values
 #'
+#' @export
 setClass("prior", contains = "numeric", slots = list(lognormal.par = "list"))
