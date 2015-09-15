@@ -3,7 +3,7 @@
 #' 
 #' This function provides a simple \code{plot} method for the \code{prior} object class.
 #' 
-#' @param object an \code{\link{prior}} object class
+#' @param x an \code{\link{prior}} object class
 #' @param ... additional arguments for \code{\link[graphics]{hist}}
 #' 
 #' @examples
@@ -26,11 +26,11 @@
 #' @importFrom graphics plot
 #' 
 #' @export
-plot.prior <- function(object, ...)
+plot.prior <- function(x, ...)
 {
-    logmu    <- object@lognormal.par[['E[log(x)]']]
-    logsigma <- object@lognormal.par[['SD[log(x)]']]
+    logmu    <- x@lognormal.par[['E[log(x)]']]
+    logsigma <- x@lognormal.par[['SD[log(x)]']]
     
-    hist(object@.Data, freq = FALSE, ...)
+    hist(x@.Data, freq = FALSE, ...)
     curve(dlnorm(x, logmu, logsigma), col = 2, lwd = 2, add = TRUE)
 }
