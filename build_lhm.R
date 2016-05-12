@@ -33,7 +33,7 @@ devtools::run_examples(fresh = TRUE)
 #devtools::test()
 
 # run checks
-devtools::check(vignettes = FALSE)
+#devtools::check(vignettes = FALSE)
 
 # build and install
 system("Rcmd.exe INSTALL --no-multiarch --with-keep.source ../lhm")
