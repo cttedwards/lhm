@@ -7,7 +7,7 @@
 #' 
 #' @examples
 #' # M at age vector input
-#' dat <- lhm(amax = 10,iter=1)
+#' dat <- lhm(ainf = 10,iter=1)
 #' nmort(dat) <- c(0.1,0.1,0.2)
 #' nmort(dat)
 #' 

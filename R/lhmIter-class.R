@@ -4,10 +4,10 @@
 #'
 #' Initialisation is through a call to \code{\link{iteration}}, which will extract a single iteration from an \code{lhm} object.
 #' 
-#' @slot amax the maximum age for each life-history data vector
+#' @slot ainf the asymptotic age (equal to the maximum age for each life-history data vector)
 #' @slot sr the type of stock-recruitment relationship used, either Beverton-Holt (\code{'BH'}) or Ricker (\code{'RK'})
 #' @slot lhdat list of numeric vectors containing life-history data-at-age, specifically, mass, maturity, natural mortality and survivorship, as well as a steepness value
 #' 
 #' @seealso \code{\link{lhm}}, \code{\link{iteration}}, \code{\link{rCalc}}
 #' 
-setClass("lhmIter", slots = list(amax = "numeric", sr = "character", lhdat = "list"))
+setClass("lhmIter", slots = list(ainf = "numeric", sr = "character", lhdat = "list"))

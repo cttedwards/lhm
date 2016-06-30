@@ -2,16 +2,16 @@
 #' 
 #' @include lhmIter-class.R
 #'
-setMethod("initialize", signature = "lhmIter", definition = function(.Object, amax, sr) {
+setMethod("initialize", signature = "lhmIter", definition = function(.Object, ainf, sr) {
     
-    if (!missing(amax)) {
+    if (!missing(ainf)) {
         
-        .Object@amax <- amax
-        .Object@lhdat[['survivorship']] <- vector('numeric',amax)
-        .Object@lhdat[['M']]            <- vector('numeric',amax)
-        .Object@lhdat[['size']]         <- vector('numeric',amax)
-        .Object@lhdat[['mass']]         <- vector('numeric',amax)
-        .Object@lhdat[['maturity']]     <- vector('numeric',amax)
+        .Object@ainf <- ainf
+        .Object@lhdat[['survivorship']] <- vector('numeric',ainf)
+        .Object@lhdat[['M']]            <- vector('numeric',ainf)
+        .Object@lhdat[['size']]         <- vector('numeric',ainf)
+        .Object@lhdat[['mass']]         <- vector('numeric',ainf)
+        .Object@lhdat[['maturity']]     <- vector('numeric',ainf)
         
     }
     

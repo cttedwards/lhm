@@ -15,12 +15,12 @@
 #' 
 #' @examples
 #' # single iteration
-#' dat <- lhm(amax = 30, iter = 1)
+#' dat <- lhm(ainf = 30, iter = 1)
 #' sr(dat) <- list(type = 'BH', mu = 0.75)
 #' sr(dat)
 #' 
 #' # multiple stochastic iterations
-#' dat <- lhm(amax = 30, iter = 10)
+#' dat <- lhm(ainf = 30, iter = 10)
 #' sr(dat) <- list(type = 'BH', mu = 0.75, cv = 0.1)
 #' sr(dat)
 #' 

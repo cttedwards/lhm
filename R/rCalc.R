@@ -9,9 +9,9 @@
 #'
 #' @examples
 #' # initialise lhm object
-#' amax <- 100
+#' ainf <- 100
 #' iter <- 1
-#' rdat <- lhm(amax,iter)
+#' rdat <- lhm(ainf,iter)
 #' 
 #' # assign life-history data
 #' nmort(rdat)    <- list(mu=0.18)
@@ -87,7 +87,7 @@ setMethod("rCalc", signature = "lhmIter", function(.Object) {
   m <- alpha * .Object@lhdat[['mass']] * .Object@lhdat[['maturity']]
   
   # minimise Euler-Lotka equation
-  obj <- function(r) sum(exp(-r * 1:.Object@amax) * l * m) - 1
+  obj <- function(r) sum(exp(-r * 1:.Object@ainf) * l * m) - 1
   r <- uniroot(obj,interval = c(0,10))$root
   
   # return intrinsic growth rate

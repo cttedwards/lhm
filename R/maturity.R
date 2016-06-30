@@ -23,7 +23,7 @@
 #' @examples
 #' 
 #' # initialize single iteration
-#' dat <- lhm(amax = 30, iter = 1)
+#' dat <- lhm(ainf = 30, iter = 1)
 #' 
 #' # add knife-edged maturity
 #' maturity(dat) <- list(mu = list(acrit = 10))
@@ -75,11 +75,11 @@ setMethod("maturity<-",
               } else delta <- rep(delta.mu,object@iter)
               
               for (i in 1:object@iter)
-                object@lhdat[['maturity']][,i] <- 1/(1 + exp((acrit[i] - (1:object@amax))/delta[i]))
+                object@lhdat[['maturity']][,i] <- 1/(1 + exp((acrit[i] - (1:object@ainf))/delta[i]))
             } else {
               acrit.mu <- as.integer(acrit.mu)
-              if (acrit.mu <= object@amax)
-                object@lhdat[['maturity']][acrit.mu:object@amax,] <- 1
+              if (acrit.mu <= object@ainf)
+                object@lhdat[['maturity']][acrit.mu:object@ainf,] <- 1
             }
             
             object
@@ -94,10 +94,10 @@ setMethod("maturity<-",
           function(object,value) {
             
             mat.mu <- value
-            if (length(mat.mu) < object@amax)
-                mat.mu[(length(mat.mu) + 1):object@amax] <- rep(mat.mu[length(mat.mu)],object@amax - length(mat.mu))
-            if (length(mat.mu) > object@amax)
-                mat.mu <- mat.mu[1:object@amax]
+            if (length(mat.mu) < object@ainf)
+                mat.mu[(length(mat.mu) + 1):object@ainf] <- rep(mat.mu[length(mat.mu)],object@ainf - length(mat.mu))
+            if (length(mat.mu) > object@ainf)
+                mat.mu <- mat.mu[1:object@ainf]
             
             object@lhdat[['maturity']] <- apply(object@lhdat[['maturity']],2,function(object) mat.mu)
             

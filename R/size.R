@@ -22,16 +22,16 @@
 #' 
 #' @examples
 #' 
-#' amax <- 30
+#' ainf <- 30
 #' Linf <- 100
 #' k    <- 0.1
 #' t0   <- -0.5
 #' 
 #' # initialize lhm object
-#' dat <- lhm(amax, iter = 1)
+#' dat <- lhm(ainf, iter = 1)
 #' 
 #' # assignment via numeric
-#' size(dat) <- Linf * (1 - exp(-k*(1:amax - t0)))
+#' size(dat) <- Linf * (1 - exp(-k*(1:ainf - t0)))
 #' size(dat)
 #' 
 #' # assignment via list
@@ -94,13 +94,13 @@ setMethod("size<-",
                 } else t0 <- rep(t0.mu,object@iter)
                 
                 for (i in 1:object@iter)
-                  object@lhdat[['size']][,i] <- Linf[i] * (1 - exp(-k[i]*(1:object@amax - t0[i])))
+                  object@lhdat[['size']][,i] <- Linf[i] * (1 - exp(-k[i]*(1:object@ainf - t0[i])))
               } else {
                 size.sd <- sqrt(log(1 + value$cv))
-                object@lhdat[['size']] <- apply(object@lhdat[['size']],2,function(y) Linf.mu * (1 - exp(-k.mu*(c(1:object@amax) - t0.mu))) * rlnorm(1,-size.sd^2/2,size.sd))
+                object@lhdat[['size']] <- apply(object@lhdat[['size']],2,function(y) Linf.mu * (1 - exp(-k.mu*(c(1:object@ainf) - t0.mu))) * rlnorm(1,-size.sd^2/2,size.sd))
               }
             } else {
-              object@lhdat[['size']] <- apply(object@lhdat[['size']],2,function(y) Linf.mu * (1 - exp(-k.mu*(c(1:object@amax) - t0.mu))))
+              object@lhdat[['size']] <- apply(object@lhdat[['size']],2,function(y) Linf.mu * (1 - exp(-k.mu*(c(1:object@ainf) - t0.mu))))
             }
             object@lhdat[['size']] <- apply(object@lhdat[['size']],2,function(y) { y[y < 0] <- 0; y })
             
@@ -115,7 +115,7 @@ setMethod("size<-",
           function(object, value) {
             
             size.mu <- value
-            if (length(size.mu) < object@amax) 
+            if (length(size.mu) < object@ainf) 
               stop('length of size-at-age vector must equal number of age classes\n')
             
             object@lhdat[['size']] <- apply(object@lhdat[['size']],2,function(x) size.mu)

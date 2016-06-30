@@ -1,15 +1,15 @@
 #'
 #' @rdname lhm-class
 #' 
-#' @param amax the assumed maximum age
+#' @param ainf the assumed asymptotic age
 #' @param iter the number of iterations
 #' @param ... additional arguments \code{nmort}, \code{growth}, \code{mass}, \code{sr} and \code{maturity} that can be optionally specified at initialisation of the object
 #' 
 #' @examples
 #' # initialise rdat object
-#' amax <- 100
+#' ainf <- 100
 #' iter <- 1
-#' dat <- lhm(amax,iter)
+#' dat <- lhm(ainf,iter)
 #' 
 #' # assign life-history data
 #' nmort(dat)    <- list(mu=0.18)
@@ -23,46 +23,46 @@
 #' @include lhm-class.R
 #' 
 #' @export
-lhm <- function(amax, iter = 1, ...) new("lhm", amax, iter, ...)
+lhm <- function(ainf, iter = 1, ...) new("lhm", ainf, iter, ...)
 
-setMethod("initialize", signature = "lhm", definition = function(.Object, amax, iter, nmort, growth, mass, sr, maturity, lhm.object) {
+setMethod("initialize", signature = "lhm", definition = function(.Object, ainf, iter, nmort, growth, mass, sr, maturity, lhm.object) {
     
     if (!missing(lhm.object)) {
         
-        .Object@amax <- lhm.object@amax
+        .Object@ainf <- lhm.object@ainf
         .Object@sr   <- lhm.object@sr
         
         if (!missing(iter)) {
             
             .Object@iter                    <- iter
-            .Object@lhdat[['M']]            <- matrix(rep(lhm.object@lhdat[['M']],iter),lhm.object@amax,iter)
+            .Object@lhdat[['M']]            <- matrix(rep(lhm.object@lhdat[['M']],iter),lhm.object@ainf,iter)
             .Object@lhdat[['h']]            <- matrix(rep(lhm.object@lhdat[['h']],iter),1,iter)
-            .Object@lhdat[['survivorship']] <- matrix(rep(lhm.object@lhdat[['survivorship']],iter),lhm.object@amax,iter)
-            .Object@lhdat[['size']]         <- matrix(rep(lhm.object@lhdat[['size']],iter),lhm.object@amax,iter)
-            .Object@lhdat[['mass']]         <- matrix(rep(lhm.object@lhdat[['mass']],iter),lhm.object@amax,iter)
-            .Object@lhdat[['maturity']]     <- matrix(rep(lhm.object@lhdat[['maturity']],iter),lhm.object@amax,iter)
+            .Object@lhdat[['survivorship']] <- matrix(rep(lhm.object@lhdat[['survivorship']],iter),lhm.object@ainf,iter)
+            .Object@lhdat[['size']]         <- matrix(rep(lhm.object@lhdat[['size']],iter),lhm.object@ainf,iter)
+            .Object@lhdat[['mass']]         <- matrix(rep(lhm.object@lhdat[['mass']],iter),lhm.object@ainf,iter)
+            .Object@lhdat[['maturity']]     <- matrix(rep(lhm.object@lhdat[['maturity']],iter),lhm.object@ainf,iter)
             
         }
     } else {
-        if (!missing(amax)) {
+        if (!missing(ainf)) {
             
-            .Object@amax <- amax
+            .Object@ainf <- ainf
             
             if (!missing(iter)) {
                 
                 .Object@iter                    <- iter
-                .Object@lhdat[['M']]            <- matrix(NA,amax,iter)
+                .Object@lhdat[['M']]            <- matrix(NA,ainf,iter)
                 .Object@lhdat[['h']]            <- matrix(NA,1,iter)
-                .Object@lhdat[['survivorship']] <- matrix(NA,amax,iter)
-                .Object@lhdat[['size']]         <- matrix(NA,amax,iter)
-                .Object@lhdat[['mass']]         <- matrix(NA,amax,iter)
-                .Object@lhdat[['maturity']]     <- matrix(0,amax,iter)
+                .Object@lhdat[['survivorship']] <- matrix(NA,ainf,iter)
+                .Object@lhdat[['size']]         <- matrix(NA,ainf,iter)
+                .Object@lhdat[['mass']]         <- matrix(NA,ainf,iter)
+                .Object@lhdat[['maturity']]     <- matrix(0,ainf,iter)
                 
                 if (!missing(nmort)) {
                     
                     M.mu <- nmort$mu$M
-                    if (length(M.mu) < amax)
-                        M.mu[(length(M.mu) + 1):amax] <- rep(M.mu[length(M.mu)],amax-length(M.mu))
+                    if (length(M.mu) < ainf)
+                        M.mu[(length(M.mu) + 1):ainf] <- rep(M.mu[length(M.mu)],ainf-length(M.mu))
                     
                     if (!is.null(nmort$cv$M)) {
                         M.sd <- sqrt(log(1 + nmort$cv$M^2)) 
@@ -75,7 +75,7 @@ setMethod("initialize", signature = "lhm", definition = function(.Object, amax, 
                     
                     # recalculate survivorship
                     for (i in 1:iter)
-                        for (a in 1:amax)
+                        for (a in 1:ainf)
                             .Object@lhdat[['survivorship']][a,i] <- exp(-sum(.Object@lhdat[['M']][1:a,i]))
                         
                 }
@@ -132,7 +132,7 @@ setMethod("initialize", signature = "lhm", definition = function(.Object, amax, 
                     } else t0 <- rep(t0.mu,iter)
                     
                     for (i in 1:iter)
-                        for (a in 1:amax)
+                        for (a in 1:ainf)
                             .Object@lhdat[['size']][a,i] <- max(Linf[i] * (1 - exp(-k[i]*(a - t0[i]))),0)
                     
                     if (!missing(mass)) {
@@ -151,7 +151,7 @@ setMethod("initialize", signature = "lhm", definition = function(.Object, amax, 
                         } else bb <- rep(b.mu,iter)
                         
                         for (i in 1:iter)
-                            for (a in 1:amax)
+                            for (a in 1:ainf)
                                 .Object@lhdat[['mass']][a,i] <- aa[i] * .Object@lhdat[['size']][a,i]^bb[i]
                     }
                 }
@@ -174,12 +174,12 @@ setMethod("initialize", signature = "lhm", definition = function(.Object, amax, 
                         } else delta <- rep(delta.mu,iter)
                         
                         for (i in 1:iter)
-                            for (a in 1:amax)
+                            for (a in 1:ainf)
                                 .Object@lhdat[['maturity']][a,i] <- 1/(1 + exp((acrit[i] - a)/delta[i]))
                     } else {
                         acrit.mu <- as.integer(acrit.mu)
-                        if (acrit.mu <= amax)
-                            .Object@lhdat[['maturity']][acrit.mu:amax,] <- 1
+                        if (acrit.mu <= ainf)
+                            .Object@lhdat[['maturity']][acrit.mu:ainf,] <- 1
                     }
                 }
             }

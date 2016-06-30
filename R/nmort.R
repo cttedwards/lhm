@@ -21,32 +21,32 @@
 #'
 #' @examples
 #' # M at age vector input
-#' dat <- lhm(amax = 10,iter=1)
+#' dat <- lhm(ainf = 10,iter=1)
 #' nmort(dat) <- c(0.1,0.1,0.2)
 #' nmort(dat)
 #' 
 #' # constant M with log-normal uncertainty
-#' dat <- lhm(amax=10, iter = 20)
+#' dat <- lhm(ainf=10, iter = 20)
 #' nmort(dat) <- list(mu = 0.2, cv = 0.25)
 #' nmort(dat)
 #' 
 #' # constant M with bounded log-normal uncertainty
-#' dat <- lhm(amax = 10, iter = 20)
+#' dat <- lhm(ainf = 10, iter = 20)
 #' nmort(dat) <- list(mu = 0.2, cv = 0.5, range = c(0.1,0.3))
 #' nmort(dat)
 #' 
 #' # constant M with uniform uncertainty
-#' dat <- lhm(amax = 10,iter = 20)
+#' dat <- lhm(ainf = 10,iter = 20)
 #' nmort(dat) <- list(range = c(0.1,0.3))
 #' nmort(dat)
 #' 
 #' # M at age with log-normal uncertainty
-#' dat <- lhm(amax=10, iter = 20)
+#' dat <- lhm(ainf=10, iter = 20)
 #' nmort(dat) <- list(mu = c(0.1,0.1,0.2), cv = 0.25)
 #' nmort(dat)
 #' 
 #' # M at age with bounded log-normal uncertainty
-#' dat <- lhm(amax = 10, iter = 20)
+#' dat <- lhm(ainf = 10, iter = 20)
 #' nmort(dat) <- list(mu = c(0.1,0.1,0.2), cv = 0.25, range = c(0.1,0.3))
 #' nmort(dat)
 #' 
@@ -73,8 +73,8 @@ setMethod("nmort<-",
             
             if (!is.null(value$mu)) {
               M.mu <- value$mu
-              if (length(M.mu) < object@amax)
-                M.mu[(length(M.mu) + 1):object@amax] <- rep(M.mu[length(M.mu)],object@amax - length(M.mu))
+              if (length(M.mu) < object@ainf)
+                M.mu[(length(M.mu) + 1):object@ainf] <- rep(M.mu[length(M.mu)],object@ainf - length(M.mu))
               
               if (!is.null(value$cv)) {
                 M.sd <- sqrt(log(1 + value$cv^2)) 
@@ -91,7 +91,7 @@ setMethod("nmort<-",
               if (!is.null(value$range)) {
                 low <- value$range[1]
                 upp <- value$range[2]
-                object@lhdat[['M']] <- apply(object@lhdat[['M']],2,function(y) rep(runif(1,low,upp),object@amax))
+                object@lhdat[['M']] <- apply(object@lhdat[['M']],2,function(y) rep(runif(1,low,upp),object@ainf))
               } else {
                 stop('must supply mean or range of values\n')
               }
@@ -102,7 +102,7 @@ setMethod("nmort<-",
             object@lhdat[['survivorship']] <- apply(object@lhdat[['survivorship']],2,function(y) {  
                                                                                             m <- y; 
                                                                                             y[1] <- 1;
-                                                                                            for (a in 2:object@amax)
+                                                                                            for (a in 2:object@ainf)
                                                                                                 y[a] <- y[a - 1]*exp(-m[a - 1]);
                                                                                             y
                                                                                             })
@@ -117,8 +117,8 @@ setMethod("nmort<-",
           function(object, value) {
             
             M.mu <- value
-            if (length(M.mu) < object@amax)
-              M.mu[(length(M.mu) + 1):object@amax] <- rep(M.mu[length(M.mu)],object@amax - length(M.mu))
+            if (length(M.mu) < object@ainf)
+              M.mu[(length(M.mu) + 1):object@ainf] <- rep(M.mu[length(M.mu)],object@ainf - length(M.mu))
             
             object@lhdat[['M']] <- apply(object@lhdat[['M']],2,function(y) M.mu)
                         
@@ -128,7 +128,7 @@ setMethod("nmort<-",
                                                     function(y) {  
                                                                     m <- y; 
                                                                     y[1] <- 1;
-                                                                    for (a in 2:object@amax)
+                                                                    for (a in 2:object@ainf)
                                                                         y[a] <- y[a - 1]*exp(-m[a - 1]);
                                                                     y
                                                                 })

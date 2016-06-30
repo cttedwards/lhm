@@ -10,7 +10,7 @@
 #' 
 #' @examples
 #' # initialise data object
-#' dat <- lhm(amax = 30, iter = 1)
+#' dat <- lhm(ainf = 30, iter = 1)
 #' 
 #' # to generate monte-carlo iterations first either 
 #' # re-initialise 'lhm' object using more iterations or 

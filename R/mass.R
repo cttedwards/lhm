@@ -23,7 +23,7 @@
 #' @examples
 #' 
 #' # initialize single iteration
-#' dat <- lhm(amax = 30, iter = 1)
+#' dat <- lhm(ainf = 30, iter = 1)
 #' 
 #' # add length data
 #' size(dat) <- list(mu=list(Linf = 100, k = 0.1, t0 = -0.5))
@@ -111,7 +111,7 @@ setMethod("mass<-",
           function(object, value) {
             
             mass.mu <- value
-            if (length(mass.mu) < object@amax) 
+            if (length(mass.mu) < object@ainf) 
               stop('length of mass-at-age vector must equal number of age classes\n')
             
             object@lhdat[['mass']] <- apply(object@lhdat[['mass']],2,function(object) mass.mu)

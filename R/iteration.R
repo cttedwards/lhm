@@ -17,7 +17,7 @@ setGeneric("iteration", function(object, iter, ...) standardGeneric("iteration")
 #' @rdname iteration
 setMethod("iteration", signature(object = "lhm",iter = "numeric"),
           definition = function(object, iter) {
-              x <- new('lhmIter', amax = object@amax, sr = object@sr)
+              x <- new('lhmIter', ainf = object@ainf, sr = object@sr)
               x@lhdat <- lapply(object@lhdat, function(x) x[, iter]) 
               return(x)
               }
