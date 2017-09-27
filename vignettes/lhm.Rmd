@@ -1,0 +1,39 @@
+---
+title: "Life history module `lhm`"
+author: "Charles T T Edwards (NIWA, Wellington, New Zealand)"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    fig_caption: yes
+    toc: no
+vignette: >
+  %\VignetteIndexEntry{lhm}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.path = 'fig/bdm-examples-', fig.width = 6, tidy = TRUE, tidy.opts = list(blank = TRUE, width.cutoff = 95), message = FALSE, warning = FALSE, collapse = TRUE, comment = "#>")
+```
+
+## Development of a prior for $r$
+If life history data are available we can populate an object of the `lhm` class, which is obtained from the `lhm` (life-history module) package, and is used to store and manipulate life-history data. Monte-carlo samples are generated, and application of the `lhm::rCalc` function to this class of object calcuates values of the intrinsic growth rate $r$ for each iteration, producing an object of the `prior` class. The `prior` class contains a numeric vector with an additional slot for holding parameters of the associated distribution. Currently only the log-normal distribution is supported, with paramters stored in `object@lognormal.par`.
+
+```{r results='hide', fig.cap='Prior for $r$ generated from life-history data for Chatham Rise hake (New Zealand).'}
+library(lhm)
+
+# initialise lhm data object for calculation of r with uncertainty
+rdat <- lhm(ainf = 100, iter = 200)
+
+# then life-history vectors can be assigned to each iteration
+# with or without uncertainty
+nmort(rdat)    <- list(mu = 0.18)
+maturity(rdat) <- c(0.0,0.01,0.02,0.06,0.14,0.28,0.50,0.72,0.86,0.94,0.98,0.99,1.00)
+size(rdat)     <- list(mu = list(Linf = 106.5, k = 0.229, t0 = 0.01))
+mass(rdat)     <- list(mu = list(a = 1.88e-9, b = 3.305))
+sr(rdat)       <- list(type = 'BH', mu = 0.90, cv = 0.10)
+
+# calculate r prior and fit log-normal distribution
+r <- rCalc(rdat)
+plot(r)
+```

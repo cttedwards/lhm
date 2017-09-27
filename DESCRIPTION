@@ -1,8 +1,8 @@
 Package: lhm
 Type: Package
 Title: Life-history module
-Version: 0.0.0.9006
-Date: 2016-06-30
+Version: 1.0.0.1
+Date: 2017-09-27
 Author: Charles T T Edwards
 Maintainer: Charles T T Edwards <charles.edwards@niwa.co.nz>
 Description: Module for the storage and processing of life-history data,
@@ -37,4 +37,4 @@ Collate:
     'sr.R'
     'survivorship.R'
     'zzz.R'
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

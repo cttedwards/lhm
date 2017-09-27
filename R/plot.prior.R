@@ -31,6 +31,6 @@ plot.prior <- function(x, ...)
     logmu    <- x@lognormal.par[['E[log(x)]']]
     logsigma <- x@lognormal.par[['SD[log(x)]']]
     
-    hist(x@.Data, freq = FALSE, ...)
+    hist(x@.Data, freq = FALSE, ..., main = "", xlab = "")
     curve(dlnorm(x, logmu, logsigma), col = 2, lwd = 2, add = TRUE)
 }

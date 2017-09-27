@@ -1,5 +1,3 @@
-
-
 # Get Version and date
 VERSION <- scan('DESCRIPTION',what = character(),skip = 3,nlines = 1)[2]
 DATE    <- Sys.Date()
@@ -19,25 +17,9 @@ rm(DESCRIPTION)
 filename <- "R/zzz.R"
 cat(".onAttach <- function(libname, pkgname)\n", file = filename)
 cat("{\n", file = filename, append = TRUE)
-cat(paste("    packageStartupMessage(\"lhm beta version ", VERSION, " (", TIME, ")\")\n", sep = ""), file = filename, append = TRUE)
+cat(paste("    packageStartupMessage(\"lhm version ", VERSION, " (", TIME, ")\")\n", sep = ""), file = filename, append = TRUE)
 cat("}\n", file = filename, append = TRUE)
 rm(filename)
 
-# roxygenize
-devtools::document()
-
-# examples
-devtools::run_examples(fresh = TRUE)
-
-# run tests
-#devtools::test()
-
-# run checks
-#devtools::check(vignettes = FALSE)
-
-# build and install
-system("Rcmd.exe INSTALL --no-multiarch --with-keep.source ../lhm")
-
-# build local binary
-devtools::build(binary = TRUE)
-
+# Write NAMESPACE
+#devtools::document()
