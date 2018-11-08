@@ -1,5 +1,5 @@
 #'
-#' Access or assign size at age
+#' @title Access or assign size at age
 #' 
 #' This function can be used to access or assign the size at age in an \code{\link{lhm}} object. 
 #' 

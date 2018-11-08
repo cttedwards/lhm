@@ -22,4 +22,4 @@ cat("}\n", file = filename, append = TRUE)
 rm(filename)
 
 # Write NAMESPACE
-#devtools::document()
+devtools::document()

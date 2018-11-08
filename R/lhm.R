@@ -3,13 +3,13 @@
 #' 
 #' @param ainf the assumed asymptotic age
 #' @param iter the number of iterations
-#' @param ... additional arguments \code{nmort}, \code{growth}, \code{mass}, \code{sr} and \code{maturity} that can be optionally specified at initialisation of the object
+#' @param ... additional arguments \code{nmort}, \code{size}, \code{mass}, \code{sr} and \code{maturity} that can be optionally specified at initialisation of the object
 #' 
 #' @examples
-#' # initialise rdat object
+#' # initialise lhm-class object
 #' ainf <- 100
 #' iter <- 1
-#' dat <- lhm(ainf,iter)
+#' dat <- lhm(ainf, iter)
 #' 
 #' # assign life-history data
 #' nmort(dat)    <- list(mu=0.18)
@@ -18,7 +18,7 @@
 #' sr(dat)       <- list(type='BH',mu=0.9)
 #' maturity(dat) <- list(mu=list(acrit=8))
 #' 
-#' @seealso See the appropriate documentation in \code{\link{mass}}, \code{\link{maturity}}, \code{\link{nmort}}, \code{\link{size}}, \code{\link{sr}} and \code{\link{survivorship}} for how these are specified, accessed and assigned. See documentation for \code{\link{rcalc}} on how to calculate \eqn{r} from an \code{lhm} object. Use \code{\link{iterate}} to increase the number of iterations after the object has been created. Use \code{\link{iteration}} to access a particular iteration.
+#' @seealso See the appropriate documentation in \code{\link{mass}}, \code{\link{maturity}}, \code{\link{nmort}}, \code{\link{size}}, \code{\link{sr}} and \code{\link{survivorship}} for how these are specified, accessed and assigned. See documentation for \code{\link{rCalc}} on how to calculate \eqn{r} from an \code{lhm} object. Use \code{\link{iterate}} to increase the number of iterations after the object has been created. Use \code{\link{iteration}} to access a particular iteration.
 #'
 #' @include lhm-class.R
 #' 

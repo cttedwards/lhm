@@ -1,7 +1,7 @@
 #'
-#' Add iterations to existing \code{lhm} object
+#' @title Add iterations to existing \code{lhm} object
 #' 
-#' This function will add an iteration dimension to the life-history data contained in an \code{lhm} object.
+#' @description This function will add an iteration dimension to the life-history data contained in an \code{lhm} object.
 #' 
 #' @param object existing \code{lhm} object
 #' @param iter number of iterations
