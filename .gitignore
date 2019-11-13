@@ -11,3 +11,5 @@ man/*.Rd
 *.Rdata
 *.zip
 *.tar.gz
+doc
+Meta
