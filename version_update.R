@@ -13,6 +13,9 @@ DESCRIPTION[5] <- paste('Date:', DATE)
 writeLines(DESCRIPTION, 'DESCRIPTION')
 rm(DESCRIPTION)
 
+# document package
+roxygen2::roxygenise(".")
+
 # Write .onAttach
 filename <- "R/zzz.R"
 cat(".onAttach <- function(libname, pkgname)\n", file = filename)
@@ -20,6 +23,3 @@ cat("{\n", file = filename, append = TRUE)
 cat(paste("    packageStartupMessage(\"lhm version ", VERSION, " (", TIME, ")\")\n", sep = ""), file = filename, append = TRUE)
 cat("}\n", file = filename, append = TRUE)
 rm(filename)
-
-# Write NAMESPACE
-devtools::document()
