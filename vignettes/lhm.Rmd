@@ -81,4 +81,53 @@ print_rmax(dfr)
 ```
 
 
+## Alternative estimators
+
+
+```{r}
+# natural mortality
+M <- apply(nmort(rdat), 2, unique)
+
+# spawning biomass per recruit
+SBPR  <- apply(rdat@lhdat[['survivorship']] * rdat@lhdat[['mass']] * rdat@lhdat[['maturity']], 2, sum)
+#cat('SBPR:',SBPR,'\n')
+
+# recruits per unit of spawning biomass
+alpha <- (4 * rdat@lhdat[['h']])/(SBPR * (1 - rdat@lhdat[['h']]))
+#cat('alpha:',alpha,'\n')
+
+# recruits per recruit
+alpha_hat <- alpha * SBPR
+
+# recruits per recruit per year
+alpha_tilde <- alpha_hat * (1 - exp(-M))
+
+# age at knife edge maturity
+amat <- (1:rdat@ainf)[apply(maturity(rdat), 2, function(x) max(which(x <= 0.5)))]
+
+dfr <- data.frame(l = exp(-M), 
+                  h = as.numeric(rdat@lhdat[['h']]),
+                  SBPR = as.numeric(SBPR), 
+                  alpha = as.numeric(alpha), 
+                  alpha_hat = as.numeric(alpha_hat), 
+                  alpha_tilde = as.numeric(alpha_tilde), 
+                  amat = as.numeric(amat))
+
+# objective function
+obj <- function(r, par) {
+
+  amat        <- par[1]
+  l           <- par[2]
+  alpha_tilde <- par[3]
+  
+  return(exp(r)^amat - l * exp(r)^(amat - 1) - alpha_tilde)
+}
+
+r_alt <- apply(dfr, 1, function(x) uniroot(obj, interval = c(0,10), par = c(x['amat'], x['l'], x['alpha_tilde']))$root)
+
+plot(r@.Data, r_alt)
+abline(0,1)
+```
+
+
 
