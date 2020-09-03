@@ -120,12 +120,12 @@ obj <- function(r, par) {
   l           <- par[2]
   alpha_tilde <- par[3]
   
-  return(exp(r)^amat - l * exp(r)^(amat - 1) - alpha_tilde)
+  return(exp(r)^amat - l * exp(r)^(amat - 1) - alpha_tilde * l)
 }
 
-r_alt <- apply(dfr, 1, function(x) uniroot(obj, interval = c(0,10), par = c(x['amat'], x['l'], x['alpha_tilde']))$root)
+dfr$r <- apply(dfr, 1, function(x) uniroot(obj, interval = c(0,10), par = c(x['amat'], x['l'], x['alpha_tilde']))$root)
 
-plot(r@.Data, r_alt)
+plot(r@.Data, dfr$r)
 abline(0,1)
 ```
 
