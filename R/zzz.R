@@ -1,4 +1,4 @@
 .onAttach <- function(libname, pkgname)
 {
-    packageStartupMessage("lhm version 1.0.0.9 (2019-11-06 16:00:09)")
+    packageStartupMessage("lhm version 1.0.0.10 (2020-09-03 11:52:45)")
 }

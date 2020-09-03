@@ -17,7 +17,7 @@ knitr::opts_chunk$set(fig.path = 'fig/bdm-examples-', fig.width = 6, tidy = TRUE
 ```
 
 ## Development of a prior for $r$
-If life history data are available we can populate an object of the `lhm` class, which is obtained from the `lhm` (life-history module) package, and is used to store and manipulate life-history data. Monte-carlo samples are generated, and application of the `lhm::rCalc` function to this class of object calcuates values of the intrinsic growth rate $r$ for each iteration, producing an object of the `prior` class. The `prior` class contains a numeric vector with an additional slot for holding parameters of the associated distribution. Currently only the log-normal distribution is supported, with paramters stored in `object@lognormal.par`.
+If life history data are available we can populate an object of the `lhm` class, which is obtained from the `lhm` (life-history module) package, and is used to store and manipulate life-history data. Monte-Carlo samples are generated, and application of the `lhm::rCalc` function to this class of object calcuates values of the intrinsic growth rate $r$ for each iteration, producing an object of the `prior` class. The `prior` class contains a numeric vector with an additional slot for holding parameters of the associated distribution. Currently only the log-normal distribution is supported, with parameters stored in `object@lognormal.par`.
 
 ```{r results='hide', fig.cap='Prior for $r$ generated from life-history data for Chatham Rise hake (New Zealand).'}
 library(lhm)
@@ -37,3 +37,48 @@ sr(rdat)       <- list(type = 'BH', mu = 0.90, cv = 0.10)
 r <- rCalc(rdat)
 plot(r)
 ```
+
+## Refine prior
+It is possible to refine the prior distribution using an allometric scaling constant
+
+```{r echo = FALSE}
+print_rmax <- function(data) {
+    
+    cat('rmax:', round(quantile(data$rmax, c(0.5, 0.025, 0.975)), 3), '\n')
+    cat('rmax (rT_exact):', with(subset(data, rT_exact), round(quantile(rmax, c(0.5, 0.025, 0.975)), 3)), '\n')
+    cat('rmax (rT_adjusted):', with(subset(data, rT_adjusted), round(quantile(rmax, c(0.5, 0.025, 0.975)), 3)), '\n')
+}
+```
+
+```{r}
+refine_rmax <- function(data, a = 1, sigma2 = 0.045, delta = 0.1) {
+    
+    # check headers
+    stopifnot(all(c("rmax", "tmax") %in% names(data)))
+    
+    # estimated allometric scaling constant
+    data$rT <- with(data, tmax * rmax)
+    
+    # trim using 'exact' method
+    data$rT_exact <- with(data, abs(rT - a) < delta)
+    
+    # trim using 'adjusted' method
+    asim <- rnorm(nrow(data), a, sqrt(sigma2))
+    data$rT_adjusted <- with(data, abs(rT - asim) < delta)
+    
+    # save scaling constants
+    data$a    <- a
+    data$asim <- asim
+    
+    # return
+    return(data)
+}
+
+dfr <- data.frame(rmax = r@.Data, tmax = r@generation.time)
+dfr <- refine_rmax(dfr)
+
+print_rmax(dfr)
+```
+
+
+
