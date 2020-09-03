@@ -11,4 +11,4 @@
 #' @slot lognormal.par log-normal distribution parameter values
 #'
 #' @export
-setClass("prior", contains = "numeric", slots = list(lognormal.par = "list"))
+setClass("prior", contains = "numeric", slots = list(lognormal.par = "list", generation.time = "numeric"))
