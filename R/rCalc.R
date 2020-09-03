@@ -29,6 +29,8 @@
 #' 
 #' @export
 setGeneric("rCalc", function(.Object, ...) standardGeneric("rCalc"))
+#' @export
+setGeneric("tCalc", function(.Object, ...) standardGeneric("tCalc"))
 #'
 #' @rdname rCalc
 setMethod("rCalc", signature = "lhm", function(.Object) {
