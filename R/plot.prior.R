@@ -26,11 +26,38 @@
 #' @importFrom graphics plot
 #' 
 #' @export
-plot.prior <- function(x, ...)
+plot.prior <- function(object, ...)
 {
-    logmu    <- x@lognormal.par[['E[log(x)]']]
-    logsigma <- x@lognormal.par[['SD[log(x)]']]
     
-    hist(x@.Data, freq = FALSE, ..., main = "", xlab = "")
+    if (length(object@lognormal.par) < 5) {
+        
+        # calculate log-normal pars
+        x <- object@.Data
+        
+        # transform to normal
+        y <- log(x)
+        
+        # estimate parameters of
+        # normal distribution log(x)
+        mu     <- mean(y)
+        sigma  <- sd(y)
+        sigma2 <- sigma^2
+        
+        # estimate parameters of
+        # log-normal distribution
+        theta <- exp(mu + sigma2/2)
+        nu    <- exp(2*mu + sigma2)*(exp(sigma2) - 1)
+        cv    <- sqrt(exp(sigma2) - 1)
+        
+        # assign
+        object@lognormal.par <- list('E[log(x)]' = mu, 'SD[log(x)]' = sigma, 'E[x]' = theta, 'VAR[x]' = nu, 'CV[x]' = cv)
+    }
+    
+    logmu    <- object@lognormal.par[['E[log(x)]']]
+    logsigma <- object@lognormal.par[['SD[log(x)]']]
+    
+    hist(object@.Data, freq = FALSE, ..., main = "", xlab = "")
     curve(dlnorm(x, logmu, logsigma), col = 2, lwd = 2, add = TRUE)
+    
+    invisible(object)
 }
