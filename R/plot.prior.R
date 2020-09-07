@@ -50,11 +50,11 @@ plot.prior <- function(object, ...)
         cv    <- sqrt(exp(sigma2) - 1)
         
         # assign
-        object@lognormal.par <- list('E[log(x)]' = mu, 'SD[log(x)]' = sigma, 'E[x]' = theta, 'VAR[x]' = nu, 'CV[x]' = cv)
+        object@lognormal.par <- list('E[log(r)]' = mu, 'SD[log(r)]' = sigma, 'E[r]' = theta, 'VAR[r]' = nu, 'CV[r]' = cv)
     }
     
-    logmu    <- object@lognormal.par[['E[log(x)]']]
-    logsigma <- object@lognormal.par[['SD[log(x)]']]
+    logmu    <- object@lognormal.par[['E[log(r)]']]
+    logsigma <- object@lognormal.par[['SD[log(r)]']]
     
     hist(object@.Data, freq = FALSE, ..., main = "", xlab = "")
     curve(dlnorm(x, logmu, logsigma), col = 2, lwd = 2, add = TRUE)
