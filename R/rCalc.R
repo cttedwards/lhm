@@ -64,7 +64,7 @@ setMethod("rCalc", signature = "lhm", function(.Object) {
   cv    <- sqrt(exp(sigma2) - 1)
   
   # assign
-  rPrior@lognormal.par <- list('E[log(x)]' = mu, 'SD[log(x)]' = sigma, 'E[x]' = theta, 'VAR[x]' = nu, 'CV[x]' = cv)
+  rPrior@lognormal.par <- list('E[log(r)]' = mu, 'SD[log(r)]' = sigma, 'E[r]' = theta, 'VAR[r]' = nu, 'CV[r]' = cv)
   
   return(rPrior)
   
