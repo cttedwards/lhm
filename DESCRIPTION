@@ -1,8 +1,8 @@
 Package: lhm
 Type: Package
 Title: Life-history module
-Version: 1.0.0.15
-Date: 2020-09-07
+Version: 1.0.0.16
+Date: 2020-09-14
 Author: Charles T T Edwards
 Maintainer: Charles T T Edwards <charles.edwards@niwa.co.nz>
 Description: Module for the storage and processing of life-history data,

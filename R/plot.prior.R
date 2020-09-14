@@ -56,8 +56,8 @@ plot.prior <- function(object, ...)
     logmu    <- object@lognormal.par[['E[log(r)]']]
     logsigma <- object@lognormal.par[['SD[log(r)]']]
     
-    hist(object@.Data, freq = FALSE, ..., main = "", xlab = "")
-    curve(dlnorm(x, logmu, logsigma), col = 2, lwd = 2, add = TRUE)
+    hist(object@.Data, freq = FALSE, ..., main = "", xlab = "", axes = FALSE, cex = 2)
+    curve(dlnorm(x, logmu, logsigma), col = 2, lwd = 4, add = TRUE)
     
     invisible(object)
 }
