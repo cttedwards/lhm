@@ -2,10 +2,7 @@
 title: "Life history module `lhm`"
 author: "Charles T T Edwards (NIWA, Wellington, New Zealand)"
 date: "`r Sys.Date()`"
-output:
-  rmarkdown::html_vignette:
-    fig_caption: yes
-    toc: no
+output: html_vignette
 vignette: >
   %\VignetteIndexEntry{lhm}
   %\VignetteEngine{knitr::rmarkdown}
