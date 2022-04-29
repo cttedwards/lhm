@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/cttedwards/lhm.svg?branch=master)](https://travis-ci.org/cttedwards/lhm)
-
 lhm
 ===
 
