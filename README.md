@@ -1,5 +1,7 @@
-lhm
-===
+Life history module
+===================
+
+[![R-CMD-check](https://github.com/cttedwards/lhm/actions/workflows/check-release.yaml/badge.svg)](https://github.com/cttedwards/lhm/actions/workflows/check-release.yaml)
 
 Module for the storage and processing of life-history data,
 designed to allow the calculation of derived parameters from life-history
