@@ -1,4 +1,5 @@
 # This is a basic workflow to help you get started with Actions
+# https://github.com/tuyenld/readme2tex-action
 
 name: readme2tex-action
 
@@ -6,9 +7,9 @@ name: readme2tex-action
 # events but only for the master branch
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
