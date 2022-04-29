@@ -1,5 +1,10 @@
-lhm
-===
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+  type="text/javascript">
+</script>
+
+Life history module
+===================
 
 Module for the storage and processing of life-history data,
 designed to allow the calculation of derived parameters from life-history
